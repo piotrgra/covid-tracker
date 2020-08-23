@@ -38,6 +38,7 @@ app__right {
 .app_graphTitle {
   margin-top: 10px;
 }
+
 .app__right .MuiCardContent-root {
   display: flex;
   flex-direction: column;

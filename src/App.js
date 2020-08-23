@@ -23,6 +23,20 @@ function App() {
   const [mapZoom, setMapZoom] = useState(3);
   const [mapCountries, setMapCountries] = useState([]);
   const [casesType, setCasesType] = useState("cases");
+  const [yesterdayData, setYesterdayData] = useState({});
+
+  const getYesterdayData = async (countryCode = "worldwide") => {
+    const url =
+      countryCode === "worldwide"
+        ? "https://disease.sh/v3/covid-19/all?yesterday=true&strict=true"
+        : `https://disease.sh/v3/covid-19/countries/${countryCode}?yesterday=true&strict=true`;
+
+    await fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        setYesterdayData(data);
+      });
+  };
 
   useEffect(() => {
     fetch("https://disease.sh/v3/covid-19/all")
@@ -30,6 +44,7 @@ function App() {
       .then((data) => {
         setCountryInfo(data);
       });
+    getYesterdayData();
   }, []);
 
   useEffect(() => {
@@ -68,6 +83,8 @@ function App() {
         setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
         setMapZoom(4);
       });
+
+    getYesterdayData(countryCode === "worldwide" ? "worldwide" : countryCode);
   };
   return (
     <div className="app">
@@ -81,8 +98,8 @@ function App() {
               value={country}
             >
               <MenuItem value="worldwide">Cały świat</MenuItem>
-              {countries.map((country) => (
-                <MenuItem key={country.value} value={country.value}>
+              {countries.map((country, i) => (
+                <MenuItem key={i} value={country.value}>
                   {country.name}
                 </MenuItem>
               ))}
@@ -98,6 +115,11 @@ function App() {
             title="Zachorowania"
             cases={prettyPrintStat(countryInfo.todayCases)}
             total={prettyPrintStat(countryInfo.cases)}
+            updated={countryInfo.updated}
+            countryInfo={countryInfo}
+            yesterdayData={prettyPrintStat(yesterdayData.todayCases)}
+            activeCases={prettyPrintStat(countryInfo.active)}
+            perMilion={prettyPrintStat(countryInfo.activePerOneMillion)}
           />
           <InfoBox
             active={casesType === "recovered"}
@@ -105,6 +127,10 @@ function App() {
             title="Wyleczonych"
             cases={prettyPrintStat(countryInfo.todayRecovered)}
             total={prettyPrintStat(countryInfo.recovered)}
+            updated={countryInfo.updated}
+            countryInfo={countryInfo}
+            yesterdayData={prettyPrintStat(yesterdayData.todayRecovered)}
+            perMilion={prettyPrintStat(countryInfo.recoveredPerOneMillion)}
           />
           <InfoBox
             isRed
@@ -113,6 +139,10 @@ function App() {
             title="Zmarło"
             cases={prettyPrintStat(countryInfo.todayDeaths)}
             total={prettyPrintStat(countryInfo.deaths)}
+            updated={countryInfo.updated}
+            countryInfo={countryInfo}
+            yesterdayData={prettyPrintStat(yesterdayData.todayDeaths)}
+            perMilion={prettyPrintStat(countryInfo.deathsPerOneMillion)}
           />
         </div>
 
@@ -126,9 +156,9 @@ function App() {
 
       <Card className="app__right">
         <CardContent>
-          <h3>Live Cases by Country</h3>
+          <h3>Zachorowania cały świat</h3>
           <Table countries={tableData} />
-          <h3 className="app_graphTitle">Worldwide new {casesType}</h3>
+          <h3 className="app_graphTitle">Cały świat: {casesType}</h3>
           <LineGraph casesType={casesType} />
         </CardContent>
       </Card>

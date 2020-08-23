@@ -1,7 +1,25 @@
 import React from "react";
 import "./InfoBox.css";
 import { Card, CardContent, Typography } from "@material-ui/core";
-function InfoBox({ title, cases, isRed, active, total, ...props }) {
+
+function InfoBox({
+  countryInfo,
+  title,
+  cases,
+  isRed,
+  active,
+  activeCases,
+  perMilion,
+  total,
+  updated,
+  yesterdayData,
+  ...props
+}) {
+  let date = new Date(updated).toLocaleString("pl-PL", {
+    timeZone: "Europe/Warsaw",
+  });
+
+  console.log(activeCases);
   return (
     <Card
       onClick={props.onClick}
@@ -11,14 +29,35 @@ function InfoBox({ title, cases, isRed, active, total, ...props }) {
     >
       <CardContent>
         <Typography className="infoBox__title" color="textSecondary">
-          {title}
+          {title} (dla{" "}
+          {countryInfo.country ? countryInfo.country : "Cały świat"})
         </Typography>
+
         <h2 className={`infoBox__cases ${!isRed && "infoBox__cases--green"}`}>
-          {cases}
+          <Typography className="infoBox__total" color="textSecondary">
+            dziś / wczoraj:
+          </Typography>
+          {cases} / {yesterdayData}
         </h2>
+        {activeCases ? (
+          <Typography className="infoBox__total" color="textSecondary">
+            {activeCases} aktualnie
+          </Typography>
+        ) : (
+          ""
+        )}
+
+        {perMilion ? (
+          <Typography className="infoBox__total" color="textSecondary">
+            {perMilion} na milion
+          </Typography>
+        ) : (
+          ""
+        )}
         <Typography className="infoBox__total" color="textSecondary">
-          {total} Total
+          {total} Suma
         </Typography>
+        <h4 className="infoBox__updated">Ostatnia akutalizacja: {date}</h4>
       </CardContent>
     </Card>
   );
