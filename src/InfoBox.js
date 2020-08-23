@@ -55,7 +55,7 @@ function InfoBox({
           ""
         )}
         <Typography className="infoBox__total" color="textSecondary">
-          {total} Suma
+          {total} suma
         </Typography>
         <h4 className="infoBox__updated">Ostatnia akutalizacja: {date}</h4>
       </CardContent>
