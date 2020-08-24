@@ -29,6 +29,7 @@ body {
 
 .app__left {
   flex: 0.9;
+  text-align: center;
 }
 app__right {
   display: flex;

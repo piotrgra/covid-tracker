@@ -7,6 +7,43 @@
   margin-right: 15px;
 }
 
+.infoBox__more {
+  flex: 1;
+  margin-top: 10px;
+  padding-bottom: 10px;
+  height: 24vh;
+  text-align: center;
+}
+.infoBox__more > p {
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.infoBox__more--table {
+  color: #6a5d5d;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.infoBox__more--table tr {
+  display: flex;
+  justify-content: space-between;
+}
+.infoBox__more--table td {
+  padding: 0.2rem;
+  display: flex;
+  justify-content: center !important;
+}
+
+.infoBox__more--table tr:nth-of-type(odd) {
+  background-color: #f3f2f8;
+}
+
+.infoBox__more > h1 {
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
 .infoBox__cases {
   color: #cc1034;
   font-weight: 600;

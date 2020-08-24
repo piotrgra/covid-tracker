@@ -8,7 +8,6 @@ function InfoBox({
   cases,
   isRed,
   active,
-  activeCases,
   perMilion,
   total,
   updated,
@@ -18,8 +17,6 @@ function InfoBox({
   let date = new Date(updated).toLocaleString("pl-PL", {
     timeZone: "Europe/Warsaw",
   });
-
-  console.log(activeCases);
   return (
     <Card
       onClick={props.onClick}
@@ -39,14 +36,6 @@ function InfoBox({
           </Typography>
           {cases} / {yesterdayData}
         </h2>
-        {activeCases ? (
-          <Typography className="infoBox__total" color="textSecondary">
-            {activeCases} aktualnie
-          </Typography>
-        ) : (
-          ""
-        )}
-
         {perMilion ? (
           <Typography className="infoBox__total" color="textSecondary">
             {perMilion} na milion

@@ -118,7 +118,6 @@ function App() {
             updated={countryInfo.updated}
             countryInfo={countryInfo}
             yesterdayData={prettyPrintStat(yesterdayData.todayCases)}
-            activeCases={prettyPrintStat(countryInfo.active)}
             perMilion={prettyPrintStat(countryInfo.activePerOneMillion)}
           />
           <InfoBox
@@ -145,7 +144,45 @@ function App() {
             perMilion={prettyPrintStat(countryInfo.deathsPerOneMillion)}
           />
         </div>
-
+        <Card className="infoBox__more">
+          {console.log(countryInfo)}
+          <h1>
+            Szczegóły dla{" "}
+            {countryInfo.country ? countryInfo.country : "Cały świat"}
+          </h1>
+          <table class="infoBox__more--table">
+            <tr>
+              <td>Aktywnych przypadków:</td>
+              <td>{prettyPrintStat(countryInfo.active)}</td>
+              <td>Aktywnych przypadków na milion:</td>
+              <td>{prettyPrintStat(countryInfo.activePerOneMillion)}</td>
+            </tr>
+            <tr>
+              <td>Przypadków ogólnie:</td>
+              <td>{prettyPrintStat(countryInfo.cases)}</td>
+              <td>Przypadków ogólnie na milion:</td>
+              <td>{prettyPrintStat(countryInfo.casesPerOneMillion)}</td>
+            </tr>
+            <tr>
+              <td>Zmarło:</td>
+              <td>{prettyPrintStat(countryInfo.deaths)}</td>
+              <td>Zmarło na milion:</td>
+              <td>{prettyPrintStat(countryInfo.deathsPerOneMillion)}</td>
+            </tr>
+            <tr>
+              <td>Wyzdrowiało:</td>
+              <td>{prettyPrintStat(countryInfo.recovered)}</td>
+              <td>Wyzdrowiało: na milion:</td>
+              <td>{prettyPrintStat(countryInfo.recoveredPerOneMillion)}</td>
+            </tr>
+            <tr>
+              <td>Przeprowadzono testów:</td>
+              <td>{prettyPrintStat(countryInfo.tests)}</td>
+              <td>Przeprowadzono testów na milion:</td>
+              <td>{prettyPrintStat(countryInfo.testsPerOneMillion)}</td>
+            </tr>
+          </table>
+        </Card>
         <Map
           casesType={casesType}
           countries={mapCountries}
